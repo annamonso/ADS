@@ -70,14 +70,6 @@ class LinkedQueue:
     self._tail = newest                   
     self._size += 1
 
-
-
-  
-  def merge(self):
-    merged_queue = LinkedQueue()
-    merged_queue
-    
-    
   def __str__(self):
     v = [None]*self._size
     n = self._head
@@ -86,16 +78,60 @@ class LinkedQueue:
       n = n._next
     return ' '.join(str(e) for e in v)
 
+  def merge(self, other):
+      if self.is_empty():
+        self = other
+        
+      else:
+        n = self._head
+        n1 = n._next
+        n2 = other._head
+
+        if not other.is_empty() and int(n2._element) < int(n._element):
+            other._head = n2._next  
+            n2._next = n            
+            self._head = n2         
+            n = self._head          
+            n1 = n._next            
+            n2 = other._head        
+            self._size += 1
+            other._size -= 1
+
+        while not other.is_empty():
+            if n2 is None:  
+                break
+
+            if n1 is None or int(n2._element) <= int(n1._element):
+                temp = n2._next   
+                n._next = n2      
+                n2._next = n1     
+                n = n2            
+                n2 = temp         
+                other._head = n2
+                self._size += 1
+                other._size -= 1
+            else:
+                n = n1
+                n1 = n1._next
 
 
 if __name__ == '__main__':
-    q = LinkedQueue()
+    q1 = LinkedQueue()
+    q2 = LinkedQueue()
+    i = 0 
     for line in sys.stdin:  
         values = line.strip().split()  
         for value in values:
-            q.enqueue(value)
-    
-    print(q)
-    print(f'rotate returns: {q.rotate()}')
-    print(q)
+            if i == 0:
+              q1.enqueue(value)
+            else:
+              q2.enqueue(value)
+        i += 1
+
+    print(f'v[0]: {q1.__str__()}')
+    print(f'v[1]: {q2.__str__()}')
+    q1.merge(q2)
+    print('After calling v[0].merge(v[1])')
+    print(f'v[0]: {q1.__str__()}')
+    print(f'v[1]: {q2.__str__()}')
     
