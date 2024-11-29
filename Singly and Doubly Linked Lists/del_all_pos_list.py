@@ -1,3 +1,6 @@
+import sys
+from yogi import scan
+
 class PositionalList:
     # Internal Node class
     class _Node:
@@ -98,4 +101,59 @@ class PositionalList:
         old_value = node._element
         node._element = element
         return old_value
+                
+
+    def delete_all(self, value):
+        node = self._header._next  
+        while node is not None:
+            if node._element == value:
+                #print(f"Eliminando valor {value}")
+                if node == self._header._next:  
+                    self._header._next = node._next
+                    if node._next is not None:  
+                        node._next._prev = self._header
+                elif node._next is None:  
+                    self._tail = node._prev
+                    node._prev._next = None
+                else:  
+                    node._prev._next = node._next
+                    node._next._prev = node._prev
+                self._size -= 1 
+                #print(f"Lista después de eliminar {value}: {self.__str__()}")
+            node = node._next  
+       
+        
+    def __str__(self):
+        forward_list = []
+        node = self._header._next  
+        while node is not None:
+            forward_list.append(str(node._element))
+            node = node._next
+        forward_str = ', '.join(forward_list)
+        backward_list = []
+        node = self._trailer  
+        while node is not None and node != self._header:
+            backward_list.append(str(node._element))
+            node = node._prev
+        backward_str = ', '.join(backward_list)
+        return f"{forward_str}\n{backward_str}"
     
+if __name__ == '__main__':
+    q1 = PositionalList()
+    n = scan(int)
+    for i in range(n):  
+        value = scan(int)
+        if i == 0:
+            q1.add_first(value)
+        else:
+            q1.add_last(value)
+        #print(f"q1 after adding value {value}: {q1.__str__()}")
+
+    value = scan(int)
+    res = q1.__str__()
+    print("list t:")
+    print(res)
+    q1.delete_all(value)
+    print("list after deletion t:")
+    res = q1.__str__()
+    print(res)
