@@ -124,18 +124,21 @@ class PositionalList:
        
         
     def __str__(self):
-        forward_list = []
-        node = self._header._next  
-        while node is not None:
-            forward_list.append(str(node._element))
-            node = node._next
-        forward_str = ', '.join(forward_list)
-        backward_list = []
-        node = self._trailer  
-        while node is not None and node != self._header:
-            backward_list.append(str(node._element))
-            node = node._prev
-        backward_str = ', '.join(backward_list)
+        current = self._header._next
+        
+        elements = []
+        backwards_elements = []
+        while current != self._trailer:
+            elements.append(str(current._element))  
+            current = current._next  
+        forward_str = ', '.join(elements)
+        
+        current = self._trailer._prev
+        while current != self._header:
+            backwards_elements.append(str(current._element))
+            current = current._prev
+        backward_str = ', '.join(backwards_elements)
+        
         return f"{forward_str}\n{backward_str}"
     
 if __name__ == '__main__':
