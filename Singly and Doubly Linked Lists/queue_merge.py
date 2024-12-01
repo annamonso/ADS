@@ -80,7 +80,11 @@ class LinkedQueue:
 
   def merge(self, other):
       if self.is_empty():
-        self = other
+        self._head = other._head
+        self._tail = other._tail
+        self._size = other._size
+        other._head = other._tail = None
+        other._size = 0
         
       else:
         n = self._head
@@ -113,6 +117,9 @@ class LinkedQueue:
             else:
                 n = n1
                 n1 = n1._next
+        other._head = None
+        other._tail = None 
+        other._size = 0
 
 
 if __name__ == '__main__':

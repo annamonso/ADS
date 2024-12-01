@@ -64,11 +64,37 @@ def printPreorder(t, depth=0):
           
 
 def maxim(t):
-    max = 0 
-    return max 
+    max_value = 0 
+    if t._root is None:
+        return max_value
+    def find_max(node):
+        if node is None:
+            return max_value
+        max_value = node._element
+        n = node._children 
+        for i in range(len(n)):
+            max_value = max(max_value, find_max(n[i]))
+        return max_value
+    return find_max(t._root)
+
+    # elem = t._root._element
+    # if (elem > max):
+    #     max = elem
+    # n = t._root._children
+    # for i in range(len(n)):
+    #     leaf = n[i]
+    #     if(leaf._element > max):
+    #         max = leaf._element
+    #     leaf_childrens = leaf._children
+    #     for i in range(len(leaf_childrens)):
+    #         leaf2 = n[i]
+    #         if(leaf2._element > max):
+    #             max = leaf2._element
+    # return max 
          
 if __name__ == '__main__':
     t = readTree()
-    print('\nPre-order traversal\n')
-    printPreorder(t)
+   # print('\nPre-order traversal\n')
+   # printPreorder(t)
+    print(f"{maxim(t)}")
     
