@@ -37,7 +37,7 @@ class ArrayStack:
         if self._size >= self._maxlen:  # Check if the stack is full
             raise Full('Stack is full')
         self._data[self._size] = e  # Add the element at the next available position
-        self._size += 1  # Increase the size
+        self._size += 1  
         current = sys.getsizeof(self._data)
         ArrayStack._resize_check(previous, current)
 
@@ -69,9 +69,11 @@ if __name__ == '__main__':
     n = scan(int)
     while n is not None:
         s = ArrayStack(n)  # Initialize stack with capacity
+        # print("Initializate stack")
         print(f'len {len(s)}')
         if s.is_empty(): print('stack empty')
         
+        # print("Pushing elements")
         # pushing elements
         for i in range(n + 1):
             try:
@@ -79,7 +81,8 @@ if __name__ == '__main__':
                 print(f'{i} pushed')
             except Full:
                 print('push error: stack full')
-                
+        
+        # print("using accessors 1")        
         # using accessors    
         print(f'len {len(s)}')
         try:
@@ -87,6 +90,7 @@ if __name__ == '__main__':
         except:
             print('top error: stack empty')
 
+        # print("popping elements 1")
         # popping elements  
         for _ in range(n // 4):
             try:
@@ -95,6 +99,7 @@ if __name__ == '__main__':
             except Empty:
                 print('pop error: stack empty')
 
+        # print("using accessors 2")
         # using accessors    
         print(f'len {len(s)}')
         try:
@@ -102,6 +107,7 @@ if __name__ == '__main__':
         except:
             print('top error: stack empty')
 
+        # print("popping elements 2")
         # popping elements
         for _ in range(2 + 3 * (n // 4)):
             try:

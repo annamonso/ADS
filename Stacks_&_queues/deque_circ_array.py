@@ -83,12 +83,14 @@ class DoubleEndedQueue(QueueArray):
 
     def add_to_front(self, item):
         """Add an element at the front of the deque."""
+        # if the queue is full double the size
         if self._count == len(self._storage):
             prev_size = sys.getsizeof(self._storage)
-            self._resize(2 * len(self._storage))  # double the array size
+            self._resize(2 * len(self._storage))  
             curr_size = sys.getsizeof(self._storage)
             QueueArray._resize_check(prev_size, curr_size)
 
+        # move the index one position to the left so it's the first and then add the item 
         self._front_index = (self._front_index - 1) % len(self._storage)
         self._storage[self._front_index] = item
         self._count += 1
