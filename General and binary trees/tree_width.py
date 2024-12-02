@@ -74,32 +74,37 @@ def readBinTree():
   t._root = buildTree()  # Start building from the root
   return t
 
-# Pre: t is a BST of integer numbers
-# Post: If n is in t, the result is True; otherwise, the result is False.  
-def search(t, n):
-    if t is None or t.is_empty():
-        return False
-    if t._root._element == n:
-        return True
-    # Recursively search in the left and right subtrees
-    left_subtree = BinTree(t._root._left) if t._root._left else None
-    right_subtree = BinTree(t._root._right) if t._root._right else None
-    return search(left_subtree, n) or search(right_subtree, n)
 
-      
-     
+
+from collections import deque
+
+def width(t):
+    if t.is_empty():
+        return 0
+
+    max_width = 0
+    queue = deque([t._root]) 
+    while queue:
+        level_size = len(queue)  # Número de nodos en el nivel actual
+        max_width = max(max_width, level_size)  # Actualiza el ancho máximo
+
+        # Procesa todos los nodos en el nivel actual
+        for _ in range(level_size):
+            node = queue.popleft()
+            if node._left:  # Añade el hijo izquierdo si existe
+                queue.append(node._left)
+            if node._right:  # Añade el hijo derecho si existe
+                queue.append(node._right)
+
+    return max_width
+
+
 if __name__ == '__main__': 
-    t = readBinTree()
-    # printInorder_draw(t)
     n = scan(int)
-    while n is not None:
-      if search(t, n):
-        print(n, 1)
-      else:
-        print(n, 0)
-      n = scan(int)
-      
+    for i in range(n):
+        t = readBinTree()
+        print(width(t))
+        
+        
 
 
-
-    

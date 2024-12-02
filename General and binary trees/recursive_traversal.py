@@ -74,32 +74,28 @@ def readBinTree():
   t._root = buildTree()  # Start building from the root
   return t
 
-# Pre: t is a BST of integer numbers
-# Post: If n is in t, the result is True; otherwise, the result is False.  
-def search(t, n):
-    if t is None or t.is_empty():
-        return False
-    if t._root._element == n:
-        return True
-    # Recursively search in the left and right subtrees
-    left_subtree = BinTree(t._root._left) if t._root._left else None
-    right_subtree = BinTree(t._root._right) if t._root._right else None
-    return search(left_subtree, n) or search(right_subtree, n)
+def inorder_traversal(root):
+    if root is None:
+        return []
+    return inorder_traversal(root._left) + [root._element] + inorder_traversal(root._right)
+
+def postorder_traversal(root):
+    if root is None:
+        return []
+    return postorder_traversal(root._left) + postorder_traversal(root._right) + [root._element]
+
 
       
      
 if __name__ == '__main__': 
     t = readBinTree()
-    # printInorder_draw(t)
-    n = scan(int)
-    while n is not None:
-      if search(t, n):
-        print(n, 1)
-      else:
-        print(n, 0)
-      n = scan(int)
-      
-
-
-
+    #printInorder_draw(t)
     
+    # Get traversals
+    inorder = inorder_traversal(t._root)
+    postorder = postorder_traversal(t._root)
+
+    # Output
+    print("pos:", " ".join(map(str, postorder)))
+    print("ino:", " ".join(map(str, inorder)))
+
