@@ -151,15 +151,14 @@ if __name__ == '__main__':
                 else : print("queue "+  queue + " is not empty ")
                 
             if command == "concatenate":
-                if queue == "1":
+                if queue == "1" and value == "2":
                     q1.concatenate(q2)
-                    print("queues 1 and 2 concatenated")
-                else: 
-                    q2.concatenate(q1)
-                    print("queues 2 and 1 concatenated")
+                elif queue == "2" and value == "1": 
+                    q2.concatenate(q1)    
+                print(f"queues {queue} and {value} concatenated")
                 res = q1.__str__() 
                 res2 =q2.__str__() 
-                print("queue 1: "+ res )
+                print("queue 1: " + res )
                 print("queue 2: " + res2)
         
             if command == "len":

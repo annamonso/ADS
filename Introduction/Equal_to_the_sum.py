@@ -6,6 +6,7 @@ def check_sum(n, vector):
     res = False
     i=0 
     total_sum = sum(vector)
+    # while res == False keep searching till you check all the values in the vector 
     while not res and i<n:
         x = vector[i]
         if x == (total_sum-x):
