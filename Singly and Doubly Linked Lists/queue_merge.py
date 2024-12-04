@@ -79,7 +79,6 @@ class LinkedQueue:
     return ' '.join(str(e) for e in v)
 
   def merge(self, other):
-    # if queue1 is empty, copy q2 into q1 and delete q2 
       if self.is_empty():
         self._head = other._head
         self._tail = other._tail
@@ -87,7 +86,6 @@ class LinkedQueue:
         other._head = other._tail = None
         other._size = 0
         
-      ## ERROR SI LA QUEUE 2 NO ESTA ORDENADA 
       else:
         n = self._head
         n1 = n._next
@@ -122,7 +120,6 @@ class LinkedQueue:
         other._head = None
         other._tail = None 
         other._size = 0
-  
 
 
 if __name__ == '__main__':

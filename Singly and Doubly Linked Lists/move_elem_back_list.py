@@ -102,28 +102,27 @@ class PositionalList:
         return old_value
     
     def move_to_back(self, p):
-        node = self._header._next
-        i=0
-        while node is not self._trailer:
-            if i == p:
-                # si ja es l'ultim
-                if node == self._trailer._prev:
-                    return
-                
-                # borro el node de la llista
-                node._prev._next = node._next
-                node._next._prev = node._prev
+        if not isinstance(p, self.Position):
+            raise TypeError('p must be proper Position type')
+        if p._container is not self:
+            raise ValueError('p does not belong to this container')
+        if p._node._next is None: # convention for deprecated nodes
+            raise ValueError('p is no longer valid')
 
-                # poso el node al final 
-                last_node = self._trailer._prev 
-                last_node._next = node           
-                node._prev = last_node           
-                node._next = self._trailer       
-                self._trailer._prev = node  
-                
-                return
-            node = node._next 
-            i+=1 
+        node = p._node
+        e = node._element
+
+        #Removing the node from its current position
+        node._prev._next = node._next #the previous one is now linked to the one after node
+        node._next._prev = node._prev #the next one is now linked to the one before node 
+
+        # Insert the node at the back (before the trailer)
+        predecessor = self._trailer._prev
+        successor = self._trailer
+        predecessor._next = node
+        successor._prev = node 
+        node._next = successor
+        node._prev = predecessor
 
     def __str__(self):
         current = self._header._next
@@ -144,21 +143,18 @@ class PositionalList:
         return f"{forward_str}\n{backward_str}"
             
 if __name__ == '__main__':
-    q1 = PositionalList()
-    n = scan(int)
-    for i in range(n):  
-        value = scan(int)
-        if i == 0:
-            q1.add_first(value)
-        else:
-            q1.add_last(value)
+  n = scan(int)
+  t = PositionalList()
+  for i in range(n):
+    t.add_last(scan(int))
+  i = scan(int)
+  p = t.first()
+  ## create the position and move it till the input value 
+  for _ in range(i): p = t.after(p)
+  print(f'list t:\n{t}')
+  t.move_to_back(p)
+  print(f'list after moving {i}-th element to back, t:\n{t}')
 
-    value = scan(int)
-    print("list t:")
-    print(q1.__str__())
-    print("list after moving 0-th element to back, t:")
-    q1.move_to_back(value)
-    print(q1.__str__())
     
                 
                 

@@ -205,8 +205,9 @@ if __name__ == '__main__':
             
 
     q1.merge(q2)
-    
-    print(f"t1  {q1.__str__()}")
-    print(f"t2", end="")
-
+    print('t1 ', end=' ')
+    print(q1, end='')  # Esto llamará a __str__ directamente
+    print()  # Salto de línea explícito para t1
+    print('t2', end='')  # No hay espacio adicional porque t2 está vacío
+    print(q2, end='')  # Esto llamará a __str__ directamente
 

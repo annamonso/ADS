@@ -59,11 +59,15 @@ class LinkedQueue:
         self._size += 1  # Increment the size of the queue
 
     def concatenate(self, q2):
-        if q2.is_empty():
+        # check if queue 2 is empty, if so concatenation is already done 
+        if q2._size == 0:
             return
-        if self.is_empty():
+        
+        # check if queue 1 is empty, if so copy queue 2 into queue 1 
+        if self._size == 0:
             self._head = q2._head
             self._tail = q2._tail
+        #add queue2 to the final of queue1 
         else:
             self._tail._next = q2._head
             self.tail = q2._tail
@@ -151,15 +155,20 @@ if __name__ == '__main__':
                 else : print("queue "+  queue + " is not empty ")
                 
             if command == "concatenate":
+                print(f"queues {queue} and {value} concatenated")
                 if queue == "1" and value == "2":
                     q1.concatenate(q2)
+                    res = q1.__str__() 
+                    res2 =q2.__str__() 
+                    print("queue 1: " + res )
+                    print("queue 2: " + res2)
                 elif queue == "2" and value == "1": 
                     q2.concatenate(q1)    
-                print(f"queues {queue} and {value} concatenated")
-                res = q1.__str__() 
-                res2 =q2.__str__() 
-                print("queue 1: " + res )
-                print("queue 2: " + res2)
+                    res = q1.__str__() 
+                    res2 =q2.__str__() 
+                    print("queue 2: " + res2 )
+                    print("queue 1: " + res)
+
         
             if command == "len":
                 if queue == "1":
