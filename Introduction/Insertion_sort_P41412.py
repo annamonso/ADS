@@ -16,11 +16,9 @@ def insertion_sort(v):
     return v      
             
 
-
-
 if __name__ == '__main__':
     v = [5.0, 2.0, 9.0, 1.0, 7.0]
     res = insertion_sort(v)
     print(res)
 
-        
+ 
